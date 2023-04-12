@@ -20,4 +20,46 @@ class DoomFireView @JvmOverloads constructor(
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
     }
+
+    private companion object {
+        private val firePalette = intArrayOf(
+            -0xf8f8f9,
+            -0xe0f8f9,
+            -0xd0f0f9,
+            -0xb8f0f9,
+            -0xa8e8f9,
+            -0x98e0f9,
+            -0x88e0f9,
+            -0x70d8f9,
+            -0x60d0f9,
+            -0x50c0f9,
+            -0x40b8f9,
+            -0x38b8f9,
+            -0x20b0f9,
+            -0x20a8f9,
+            -0x20a8f9,
+            -0x28a0f9,
+            -0x28a0f9,
+            -0x2898f1,
+            -0x3090f1,
+            -0x3088f1,
+            -0x3080f1,
+            -0x3078e9,
+            -0x3878e9,
+            -0x3870e9,
+            -0x3868e1,
+            -0x4060e1,
+            -0x4060e1,
+            -0x4058d9,
+            -0x4058d9,
+            -0x4050d1,
+            -0x4850d1,
+            -0x4848d1,
+            -0x4848c9,
+            -0x303091,
+            -0x202061,
+            -0x101039,
+            -0x1,
+        )
+    }
 }
