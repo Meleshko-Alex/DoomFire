@@ -1,10 +1,12 @@
 package com.example.doomfire
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.graphics.createBitmap
 
 class DoomFireView @JvmOverloads constructor(
     context: Context,
@@ -12,25 +14,28 @@ class DoomFireView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private lateinit var temp: List<IntArray>
-    private var paint = Paint()
+    private lateinit var temp: Array<IntArray>
+    private val paint = Paint()
+    private lateinit var bitmap: Bitmap
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         for (y in temp.indices) {
             for (x in temp[y].indices) {
-                val color = firePalette[temp[x][y]]
+                val color = firePalette[temp[y][x]]
                 paint.color = color
-                canvas.drawPoint(x.toFloat(), y.toFloat(), paint)
+                bitmap.setPixel(x, y, color)
             }
         }
+        canvas.drawBitmap(bitmap, 0f, 0f, paint)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
 
-        temp = List(h) { IntArray(w) }
+        bitmap = createBitmap(w, h)
+        temp = Array(h) { IntArray(w) }
         for (x in 0 until w) {
             temp[h - 1][x] = firePalette.size - 1
         }
