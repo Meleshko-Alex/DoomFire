@@ -2,6 +2,7 @@ package com.example.doomfire
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 
@@ -11,14 +12,28 @@ class DoomFireView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    override fun onDraw(canvas: Canvas?) {
+    private lateinit var temp: List<IntArray>
+    private var paint = Paint()
+
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-
+        for (y in temp.indices) {
+            for (x in temp[y].indices) {
+                val color = firePalette[temp[x][y]]
+                paint.color = color
+                canvas.drawPoint(x.toFloat(), y.toFloat(), paint)
+            }
+        }
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+
+        temp = List(h) { IntArray(w) }
+        for (x in 0 until w) {
+            temp[h - 1][x] = firePalette.size - 1
+        }
     }
 
     private companion object {
