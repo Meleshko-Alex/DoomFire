@@ -7,6 +7,9 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.graphics.createBitmap
+import java.util.*
+import kotlin.math.max
+import kotlin.math.min
 
 class DoomFireView @JvmOverloads constructor(
     context: Context,
@@ -17,9 +20,23 @@ class DoomFireView @JvmOverloads constructor(
     private lateinit var temp: Array<IntArray>
     private val paint = Paint()
     private lateinit var bitmap: Bitmap
+    private val random = Random()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+
+        for (y in temp.indices) {
+            for (x in temp[y].indices) {
+                val dx = random.nextInt(3) - 1
+                val dy = random.nextInt(6)
+                val dt = random.nextInt(2)
+
+                val x1 = min(temp[y].size - 1, max(0, x + dx))
+                val y1 = min(temp.size - 1, y + dy)
+
+                temp[y][x] = max(0, temp[y1][x1] - dt)
+            }
+        }
 
         for (y in temp.indices) {
             for (x in temp[y].indices) {
