@@ -21,11 +21,12 @@ class DoomFireView @JvmOverloads constructor(
     private val paint = Paint()
     private lateinit var bitmap: Bitmap
     private val random = Random()
+    private val scale = 6
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        for (y in temp.indices) {
+        for (y in 0 until temp.size - 1) {
             for (x in temp[y].indices) {
                 val dx = random.nextInt(3) - 1
                 val dy = random.nextInt(6)
@@ -45,16 +46,23 @@ class DoomFireView @JvmOverloads constructor(
                 bitmap.setPixel(x, y, color)
             }
         }
+
+        canvas.scale(scale.toFloat(), scale.toFloat())
         canvas.drawBitmap(bitmap, 0f, 0f, paint)
+
+        invalidate()
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
 
-        bitmap = createBitmap(w, h)
-        temp = Array(h) { IntArray(w) }
-        for (x in 0 until w) {
-            temp[h - 1][x] = firePalette.size - 1
+        val scaledW = w / scale
+        val scaledH = h / scale
+
+        bitmap = createBitmap(scaledW, scaledH)
+        temp = Array(scaledH) { IntArray(scaledW) }
+        for (x in 0 until scaledW) {
+            temp[scaledH - 1][x] = firePalette.size - 1
         }
     }
 
